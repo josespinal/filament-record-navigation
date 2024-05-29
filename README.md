@@ -1,78 +1,95 @@
-# Record navigation from views
+# Filament Record Navigation Plugin
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/josespinal/filament-record-navigation.svg?style=flat-square)](https://packagist.org/packages/josespinal/filament-record-navigation)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/josespinal/filament-record-navigation/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/josespinal/filament-record-navigation/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/josespinal/filament-record-navigation/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/josespinal/filament-record-navigation/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/josespinal/filament-record-navigation.svg?style=flat-square)](https://packagist.org/packages/josespinal/filament-record-navigation)
+## Introduction
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/filament-record-navigation.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/filament-record-navigation)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+The **Filament Record Navigation Plugin** allows seamless navigation through records in a Filament resource's form view. With this plugin, you can add "Next" and "Previous" buttons to navigate through records efficiently.
 
 ## Installation
 
-You can install the package via composer:
+### Step 1: Require the package via Composer:
 
 ```bash
 composer require josespinal/filament-record-navigation
 ```
 
-You can publish and run the migrations with:
+The package will automatically register itself.
 
-```bash
-php artisan vendor:publish --tag="filament-record-navigation-migrations"
-php artisan migrate
-```
+### Step 2: Publish the Plugin's Assets
 
-You can publish the config file with:
+Optionally, you can publish the views using:
 
-```bash
-php artisan vendor:publish --tag="filament-record-navigation-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
+```sh
 php artisan vendor:publish --tag="filament-record-navigation-views"
 ```
 
 ## Usage
 
+### Step 3: Use the Trait in Your Filament Resource Page
+
+In your Filament resource's `EditRecord` page, use the `HasRecordNavigation` trait to add the navigation functionality:
+
 ```php
-$filamentRecordNavigation = new Jose Espinal\FilamentRecordNavigation();
-echo $filamentRecordNavigation->echoPhrase('Hello, Jose Espinal!');
+namespace App\Filament\Resources\PostResource\Pages;
+
+use App\Filament\Resources\PostResource;
+use Filament\Resources\Pages\EditRecord;
+use JoseEspinal\RecordNavigation\Traits\HasRecordNavigation;
+
+class EditPost extends EditRecord
+{
+    use HasRecordNavigation;
+
+    protected static string $resource = PostResource::class;
+
+    protected function getActions(): array
+    {
+        return array_merge(parent::getActions(), $this->getNavigationActions());
+    }
+}
 ```
 
-## Testing
+If you have existing actions, merge them with the navigation actions, like so:
 
-```bash
-composer test
+```php
+protected function getActions(): array
+{
+    $existingActions = [
+        // Your existing actions here
+    ];
+
+    return array_merge($existingActions, $this->getNavigationActions());
+}
+```
+
+### Step 4: Store Record IDs in Session
+
+In your resource's `ListRecords` page, store the record IDs in the session to enable navigation:
+
+```php
+namespace App\Filament\Resources\PostResource\Pages;
+
+use App\Filament\Resources\PostResource;
+use Filament\Resources\Pages\ListRecords;
+
+class ListPosts extends ListRecords
+{
+    protected static string $resource = PostResource::class;
+
+    protected function getTableQuery()
+    {
+        $query = parent::getTableQuery();
+
+        // Store record IDs in session
+        session(['post_ids' => $query->pluck('id')->toArray()]);
+
+        return $query;
+    }
+}
 ```
 
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
 
 ## Credits
 
