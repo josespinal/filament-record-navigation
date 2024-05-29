@@ -1,6 +1,6 @@
 <?php
 
-namespace JoseEspinal\RecordNavigation\Traits;
+namespace JoseEspinal\FilamentRecordNavigation\Traits;
 
 use Filament\Resources\Pages\Page;
 use Filament\Forms\Components\Actions\Button;
