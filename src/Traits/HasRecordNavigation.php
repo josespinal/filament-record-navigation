@@ -3,7 +3,7 @@
 namespace JoseEspinal\FilamentRecordNavigation\Traits;
 
 use Filament\Resources\Pages\Page;
-use Filament\Forms\Components\Actions\Button;
+use Filament\Pages\Actions\Action;
 
 trait HasRecordNavigation
 {
@@ -21,7 +21,7 @@ trait HasRecordNavigation
         $currentIndex = array_search($this->recordId, $ids);
 
         if ($currentIndex !== false && isset($ids[$currentIndex + 1])) {
-            return redirect()->route('filament.resources.'.static::getResource()::getSlug().'.edit', ['record' => $ids[$currentIndex + 1]]);
+            return redirect()->route(static::getRouteName(), ['record' => $ids[$currentIndex + 1]]);
         }
 
         session()->flash('error', 'No next record.');
@@ -33,17 +33,17 @@ trait HasRecordNavigation
         $currentIndex = array_search($this->recordId, $ids);
 
         if ($currentIndex !== false && isset($ids[$currentIndex - 1])) {
-            return redirect()->route('filament.resources.'.static::getResource()::getSlug().'.edit', ['record' => $ids[$currentIndex - 1]]);
+            return redirect()->route(static::getRouteName(), ['record' => $ids[$currentIndex - 1]]);
         }
 
         session()->flash('error', 'No previous record.');
     }
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
-        return array_merge(parent::getActions(), [
-            Button::make('Previous')->action('previousRecord')->color('secondary'),
-            Button::make('Next')->action('nextRecord')->color('primary'),
+        return array_merge(parent::getHeaderActions(), [
+            Action::make('Previous')->action('previousRecord')->color('secondary'),
+            Action::make('Next')->action('nextRecord')->color('primary'),
         ]);
     }
 }
