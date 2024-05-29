@@ -14,7 +14,7 @@ composer require josespinal/filament-record-navigation
 
 The package will automatically register itself.
 
-### Step 2: Publish the Plugin's Assets
+### Step 2: Publish the Plugin's Views
 
 Optionally, you can publish the views using:
 
@@ -24,7 +24,7 @@ php artisan vendor:publish --tag="filament-record-navigation-views"
 
 ## Usage
 
-### Step 3: Use the Trait in Your Filament Resource Page
+### Use the Trait in Your Filament Resource Page
 
 In your Filament resource's `EditRecord` page, use the `HasRecordNavigation` trait to add the navigation functionality:
 
@@ -61,7 +61,7 @@ protected function getActions(): array
 }
 ```
 
-### Step 4: Store Record IDs in Session
+### Store Record IDs in Session
 
 In your resource's `ListRecords` page, store the record IDs in the session to enable navigation:
 
