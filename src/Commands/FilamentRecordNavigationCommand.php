@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace JoseEspinal\FilamentRecordNavigation\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class FilamentRecordNavigationCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'filament-record-navigation';
 
     public $description = 'My command';
 
