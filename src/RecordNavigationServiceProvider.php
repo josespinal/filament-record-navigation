@@ -17,7 +17,6 @@ class RecordNavigationServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('filament-record-navigation')
-            ->hasConfigFile()
             ->hasViews();
     }
 
