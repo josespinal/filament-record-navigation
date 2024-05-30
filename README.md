@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The **Filament Record Navigation Plugin** allows seamless navigation through records in a Filament resource's form view. With this plugin, you can add "Next" and "Previous" buttons to navigate through records efficiently.
+The **Filament Record Navigation Plugin** allows seamless navigation through records in a Filament resource's view. With this plugin, you can add "Next" and "Previous" buttons to navigate through records efficiently.
 
 ## Installation
 
