@@ -38,15 +38,15 @@ trait HasRecordNavigation
     {
         return array_merge(parent::getHeaderActions(), [
             Action::make('Previous')
-              ->action('previousRecord')
-              ->color('gray')
-              ->icon('heroicon-m-chevron-left')
-              ->iconButton(),
+                ->action('previousRecord')
+                ->color('gray')
+                ->icon('heroicon-m-chevron-left')
+                ->iconButton(),
             Action::make('Next')
-              ->action('nextRecord')
-              ->color('gray')
-              ->icon('heroicon-m-chevron-right')
-              ->iconButton(),
+                ->action('nextRecord')
+                ->color('gray')
+                ->icon('heroicon-m-chevron-right')
+                ->iconButton(),
         ]);
     }
 }

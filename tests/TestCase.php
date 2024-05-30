@@ -3,8 +3,8 @@
 namespace JoseEspinal\FilamentRecordNavigation\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchestra\Testbench\TestCase as Orchestra;
 use JoseEspinal\FilamentRecordNavigation\FilamentRecordNavigationServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {

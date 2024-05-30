@@ -2,9 +2,9 @@
 
 namespace JoseEspinal\RecordNavigation;
 
+use JoseEspinal\RecordNavigation\Resources\RecordNavigationResource;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use JoseEspinal\RecordNavigation\Resources\RecordNavigationResource;
 
 class RecordNavigationServiceProvider extends PackageServiceProvider
 {
