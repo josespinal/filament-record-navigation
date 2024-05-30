@@ -34,19 +34,19 @@
     },
     "autoload": {
         "psr-4": {
-            "JoseEspinal\\FilamentRecordNavigation\\": "src/",
-            "JoseEspinal\\FilamentRecordNavigation\\Database\\Factories\\": "database/factories/"
+            "JoseEspinal\\RecordNavigation\\": "src/",
+            "JoseEspinal\\RecordNavigation\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "JoseEspinal\\FilamentRecordNavigation\\Tests\\": "tests/",
+            "JoseEspinal\\RecordNavigation\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
     "scripts": {
         "post-autoload-dump": "@composer run prepare",
-        "clear": "@php vendor/bin/testbench package:purge-filament-record-navigation --ansi",
+        "clear": "@php vendor/bin/testbench package:purge--record-navigation --ansi",
         "prepare": "@php vendor/bin/testbench package:discover --ansi",
         "build": [
             "@composer run prepare",
@@ -72,10 +72,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "JoseEspinal\\FilamentRecordNavigation\\FilamentRecordNavigationServiceProvider"
+                "JoseEspinal\\RecordNavigation\\RecordNavigationServiceProvider"
             ],
             "aliases": {
-                "FilamentRecordNavigation": "JoseEspinal\\FilamentRecordNavigation\\Facades\\FilamentRecordNavigation"
+                "RecordNavigation": "JoseEspinal\\RecordNavigation\\Facades\\RecordNavigation"
             }
         }
     },

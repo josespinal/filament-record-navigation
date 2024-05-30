@@ -1,13 +1,12 @@
 <?php
 
-namespace JoseEspinal\FilamentRecordNavigation;
+namespace JoseEspinal\RecordNavigation;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use JoseEspinal\RecordNavigation\Resources\RecordNavigationResource;
-use JoseEspinal\FilamentRecordNavigation\Commands\FilamentRecordNavigationCommand;
 
-class FilamentRecordNavigationServiceProvider extends PackageServiceProvider
+class RecordNavigationServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -19,8 +18,7 @@ class FilamentRecordNavigationServiceProvider extends PackageServiceProvider
         $package
             ->name('filament-record-navigation')
             ->hasConfigFile()
-            ->hasViews()
-            ->hasCommand(FilamentRecordNavigationCommand::class);
+            ->hasViews();
     }
 
     protected function getResources(): array

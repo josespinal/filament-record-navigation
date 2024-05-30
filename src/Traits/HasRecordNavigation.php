@@ -1,8 +1,7 @@
 <?php
 
-namespace JoseEspinal\FilamentRecordNavigation\Traits;
+namespace JoseEspinal\RecordNavigation\Traits;
 
-use Filament\Resources\Pages\Page;
 use Filament\Pages\Actions\Action;
 
 trait HasRecordNavigation
