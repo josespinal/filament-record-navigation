@@ -14,19 +14,11 @@ composer require josespinal/filament-record-navigation
 
 The package will automatically register itself.
 
-### Step 2: Publish the Plugin's Views
-
-Optionally, you can publish the views using:
-
-```sh
-php artisan vendor:publish --tag="filament-record-navigation-views"
-```
-
 ## Usage
 
 ### Use the Trait in Your Filament Resource Page
 
-In your Filament resource's `EditRecord` page, use the `HasRecordNavigation` trait to add the navigation functionality:
+In your Filament resource's `EditRecord` page, use the `HasRecordNavigation` trait to add the navigation functionality. And add the action where you want, for example the header:
 
 ```php
 namespace App\Filament\Resources\PostResource\Pages;
@@ -41,7 +33,7 @@ class EditPost extends EditRecord
 
     protected static string $resource = PostResource::class;
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return array_merge(parent::getActions(), $this->getNavigationActions());
     }
@@ -51,10 +43,10 @@ class EditPost extends EditRecord
 If you have existing actions, merge them with the navigation actions, like so:
 
 ```php
-protected function getActions(): array
+protected function getHeaderActions(): array
 {
     $existingActions = [
-        // Your existing actions here
+        // Your existing actions here...
     ];
 
     return array_merge($existingActions, $this->getNavigationActions());
@@ -63,7 +55,7 @@ protected function getActions(): array
 
 ### Store Record IDs in Session
 
-In your resource's `ListRecords` page, store the record IDs in the session to enable navigation:
+In your resource's `ListRecords` page, store the record IDs in the session to enable navigation. Make sure it's called "filament_record_navigation_ids":
 
 ```php
 namespace App\Filament\Resources\PostResource\Pages;
@@ -80,7 +72,7 @@ class ListPosts extends ListRecords
         $query = parent::getTableQuery();
 
         // Store record IDs in session
-        session(['post_ids' => $query->pluck('id')->toArray()]);
+        session(['filament_record_navigation_ids' => $query->pluck('id')->toArray()]);
 
         return $query;
     }
