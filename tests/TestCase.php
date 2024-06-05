@@ -1,9 +1,9 @@
 <?php
 
-namespace JoseEspinal\FilamentRecordNavigation\Tests;
+namespace JoseEspinal\RecordNavigation\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use JoseEspinal\FilamentRecordNavigation\FilamentRecordNavigationServiceProvider;
+use JoseEspinal\RecordNavigation\RecordNavigationServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -13,14 +13,14 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Jose Espinal\\FilamentRecordNavigation\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'Jose Espinal\\RecordNavigation\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            FilamentRecordNavigationServiceProvider::class,
+            RecordNavigationServiceProvider::class,
         ];
     }
 
