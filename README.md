@@ -20,7 +20,7 @@ The package will automatically register itself.
 
 ### Use the Trait in Your Filament Resource Page
 
-In your Filament resource's `EditRecord` page, use the `HasRecordNavigation` trait to add the navigation functionality. And add the action where you want, for example the header:
+In your Filament resource's `EditRecord` page, use the `HasRecordNavigation` trait to add the navigation functionality. And add the action where you want, for example, the header with `getHeaderActions`:
 
 ```php
 namespace App\Filament\Resources\PostResource\Pages;
@@ -42,6 +42,7 @@ class EditPost extends EditRecord
 }
 ```
 
+### Use with existing actions
 If you have existing actions, merge them with the navigation actions, like so:
 
 ```php
@@ -57,28 +58,20 @@ protected function getHeaderActions(): array
 
 ### Store Record IDs in Session
 
-In your resource's `ListRecords` page, store the record IDs in the session to enable navigation. Make sure it's called "filament_record_navigation_ids":
+In your resource's `ListRecords` page, include the `HasRecordsList` trait as follows:
 
 ```php
 namespace App\Filament\Resources\PostResource\Pages;
 
 use App\Filament\Resources\PostResource;
 use Filament\Resources\Pages\ListRecords;
-use Illuminate\Database\Eloquent\Builder;
+use JoseEspinal\RecordNavigation\Traits\HasRecordsList;
 
 class ListPosts extends ListRecords
 {
+    use HasRecordsList;
+
     protected static string $resource = PostResource::class;
-
-    protected function getTableQuery(): ?Builder
-    {
-        $query = parent::getTableQuery();
-
-        // Store record IDs in session
-        session(['filament_record_navigation_ids' => $query->pluck('id')->toArray()]);
-
-        return $query;
-    }
 }
 ```
 

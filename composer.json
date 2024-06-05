@@ -34,8 +34,7 @@
     },
     "autoload": {
         "psr-4": {
-            "JoseEspinal\\RecordNavigation\\": "src/",
-            "JoseEspinal\\RecordNavigation\\Database\\Factories\\": "database/factories/"
+            "JoseEspinal\\RecordNavigation\\": "src/"
         }
     },
     "autoload-dev": {
@@ -73,10 +72,7 @@
         "laravel": {
             "providers": [
                 "JoseEspinal\\RecordNavigation\\RecordNavigationServiceProvider"
-            ],
-            "aliases": {
-                "RecordNavigation": "JoseEspinal\\RecordNavigation\\Facades\\RecordNavigation"
-            }
+            ]
         }
     },
     "minimum-stability": "dev",
