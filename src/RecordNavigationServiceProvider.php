@@ -2,7 +2,6 @@
 
 namespace JoseEspinal\RecordNavigation;
 
-use JoseEspinal\RecordNavigation\Resources\RecordNavigationResource;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -18,12 +17,5 @@ class RecordNavigationServiceProvider extends PackageServiceProvider
         $package
             ->name('filament-record-navigation')
             ->hasViews();
-    }
-
-    protected function getResources(): array
-    {
-        return [
-            RecordNavigationResource::class,
-        ];
     }
 }
