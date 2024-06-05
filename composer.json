@@ -34,7 +34,7 @@
     },
     "autoload": {
         "psr-4": {
-            "JoseEspinal\\RecordNavigation\\": "src/",
+            "JoseEspinal\\RecordNavigation\\": "src/"
         }
     },
     "autoload-dev": {
