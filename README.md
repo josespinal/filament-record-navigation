@@ -4,6 +4,8 @@
 
 The **Filament Record Navigation Plugin** allows seamless navigation through records in a Filament resource's view. With this plugin, you can add "Next" and "Previous" buttons to navigate through records efficiently.
 
+https://github.com/josespinal/filament-record-navigation/assets/10059/fbb09144-b0b5-411d-85a8-1d94eedcad01
+
 ## Installation
 
 ### Step 1: Require the package via Composer:
