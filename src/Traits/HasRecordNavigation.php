@@ -20,7 +20,9 @@ trait HasRecordNavigation
         $currentIndex = array_search($this->recordId, $ids);
 
         if ($currentIndex !== false && isset($ids[$currentIndex + 1])) {
-            return redirect()->route(static::getRouteName(), ['record' => $ids[$currentIndex + 1]]);
+            $this->recordId = $ids[$currentIndex + 1];
+            $this->initializeRecord();
+            $this->mount($this->recordId);
         }
     }
 
@@ -30,8 +32,22 @@ trait HasRecordNavigation
         $currentIndex = array_search($this->recordId, $ids);
 
         if ($currentIndex !== false && isset($ids[$currentIndex - 1])) {
-            return redirect()->route(static::getRouteName(), ['record' => $ids[$currentIndex - 1]]);
+            $this->recordId = $ids[$currentIndex - 1];
+            $this->initializeRecord();
+            $this->mount($this->recordId);
         }
+    }
+
+    public function initializeRecord()
+    {
+        $this->record = $this->loadModel();
+    }
+
+    protected function loadModel()
+    {
+        $modelClass = static::$resource::getModel();
+
+        return $modelClass::find($this->recordId);
     }
 
     protected function getNavigationActions(): array
