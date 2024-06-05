@@ -40,12 +40,12 @@ trait HasRecordNavigation
             Action::make('Previous')
                 ->action('previousRecord')
                 ->color('gray')
-                ->icon('heroicon-m-chevron-left')
+                ->icon('heroicon-s-chevron-left')
                 ->iconButton(),
             Action::make('Next')
                 ->action('nextRecord')
                 ->color('gray')
-                ->icon('heroicon-m-chevron-right')
+                ->icon('heroicon-s-chevron-right')
                 ->iconButton(),
         ]);
     }
