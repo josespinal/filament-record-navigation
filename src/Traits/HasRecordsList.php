@@ -17,8 +17,11 @@ trait HasRecordsList
             );
         }
 
+        $model = static::getResource()::getModel();
+        $routeKeyName = (new $model)->getRouteKeyName() ?? 'id';
+
         // Store record IDs in session
-        session(['filament_record_navigation_ids' => $query->pluck('id')->toArray()]);
+        session(['filament_record_navigation_ids' => $query->pluck($routeKeyName)->toArray()]);
 
         return $query;
     }
