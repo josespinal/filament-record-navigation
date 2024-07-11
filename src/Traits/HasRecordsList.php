@@ -17,6 +17,13 @@ trait HasRecordsList
             );
         }
 
+        $direction = $this->tableSortDirection ?? $this->getTable()->getDefaultSortDirection() ?? 'asc';
+        $sort = $this->tableSortColumn ?? $this->getTable()->getDefaultSort($query, $direction);
+
+        if ($direction) {
+            $query->orderBy($sort, $direction);
+        }
+
         // Store record IDs in session
         session(['filament_record_navigation_ids' => $query->pluck('id')->toArray()]);
 
