@@ -20,7 +20,7 @@ trait HasRecordsList
         $direction = $this->tableSortDirection ?? $this->getTable()->getDefaultSortDirection() ?? 'asc';
         $sort = $this->tableSortColumn ?? $this->getTable()->getDefaultSort($query, $direction);
 
-        if ($direction) {
+        if ($sort) {
             $query->orderBy($sort, $direction);
         }
 
