@@ -17,10 +17,7 @@ window.addEventListener("popstate", (event) => {
 // we need to update the browser history
 document.addEventListener('changeNavigationRecord', (event) => {
   const { recordId, url, isViewRecord, componentId, confirmMessage } = event.detail[0];
-
   const component = Livewire.find(componentId);
-
-  console.log(component.data, isViewRecord);
 
   if (!isViewRecord) {
     if (
