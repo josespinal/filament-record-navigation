@@ -106,19 +106,7 @@ No additional configuration is needed - this feature works out of the box.
 
 #### Customizing the Confirmation Message
 
-To customize the unsaved changes confirmation message, you can publish the JavaScript asset and modify it:
-
-```bash
-php artisan vendor:publish --tag=filament-record-navigation-assets
-```
-
-Then edit the confirmation message in `resources/js/vendor/filament-record-navigation/filament-record-navigation.js`:
-
-```javascript
-if (!confirm('Your custom message here')) {
-    return;
-}
-```
+By default, this uses Filament's translation key `filament-panels::unsaved-changes-alert.body`. You can customize this message by publishing Filament's translations and modifying the corresponding translation string.
 
 Remember to rebuild your assets after making changes.
 
