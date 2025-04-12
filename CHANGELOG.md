@@ -2,7 +2,7 @@
 
 All notable changes to `filament-record-navigation` will be documented in this file.
 
-## v2.1.0 - 2024-03-21
+## v2.1.0 - 2025-04-11
 
 ### Added
 - Unsaved changes confirmation before record navigation
