@@ -2,6 +2,28 @@
 
 All notable changes to `filament-record-navigation` will be documented in this file.
 
+## v2.2.0 - 2024-03-21
+
+### Added
+- Added proper type hints and return types
+- Added comprehensive PHPDoc documentation
+- Added `url` property for better URL management
+- Added `initializeProperties` method for better code organization
+
+### Changed
+- Improved code organization and maintainability
+- Refactored record initialization logic
+- Made internal methods private for better encapsulation
+- Improved type safety with proper type declarations
+- Enhanced record navigation state management
+
+### Fixed
+- Fixed potential type issues with record IDs
+- Improved handling of record navigation state
+- Better integration with Filament's unsaved changes alert
+
+**Full Changelog**: https://github.com/josespinal/filament-record-navigation/compare/v2.1.0...v2.2.0
+
 ## v2.1.0 - 2025-04-11
 
 ### Added
