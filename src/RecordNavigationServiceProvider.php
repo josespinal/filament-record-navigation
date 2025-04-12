@@ -23,7 +23,7 @@ class RecordNavigationServiceProvider extends PackageServiceProvider
     {
         // Register as a Filament asset
         FilamentAsset::register([
-            Js::make('filament-record-navigation', __DIR__ . '/../resources/dist/js/filament-record-navigation.js'),
+            Js::make('filament-record-navigation', __DIR__.'/../resources/dist/js/filament-record-navigation.js'),
         ], 'joseespinal/filament-record-navigation');
     }
 }
