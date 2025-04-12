@@ -2,7 +2,7 @@
 
 namespace JoseEspinal\RecordNavigation\Traits;
 
-use Filament\Pages\Actions\Action;
+use Filament\Actions\Action;
 
 trait HasRecordNavigation
 {
@@ -20,9 +20,17 @@ trait HasRecordNavigation
         $currentIndex = array_search($this->recordId, $ids);
 
         if ($currentIndex !== false && isset($ids[$currentIndex + 1])) {
-            $this->recordId = $ids[$currentIndex + 1];
+            $nextId = $ids[$currentIndex + 1];
+            $url = route($this->getRouteName(), $nextId);
+
+            $this->recordId = $nextId;
             $this->initializeRecord();
             $this->mount($this->recordId);
+
+            $this->dispatch('nextRecord', [
+                'recordId' => $nextId,
+                'url' => $url,
+            ]);
         }
     }
 
@@ -32,9 +40,17 @@ trait HasRecordNavigation
         $currentIndex = array_search($this->recordId, $ids);
 
         if ($currentIndex !== false && isset($ids[$currentIndex - 1])) {
-            $this->recordId = $ids[$currentIndex - 1];
+            $previousId = $ids[$currentIndex - 1];
+            $url = route($this->getRouteName(), $previousId);
+
+            $this->recordId = $previousId;
             $this->initializeRecord();
             $this->mount($this->recordId);
+
+            $this->dispatch('previousRecord', [
+                'recordId' => $previousId,
+                'url' => $url,
+            ]);
         }
     }
 
