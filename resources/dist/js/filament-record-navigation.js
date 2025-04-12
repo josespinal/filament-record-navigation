@@ -1,46 +1,43 @@
-document.addEventListener('nextRecord', (event) => {
+// When the user navigates to the first record, 
+// we need to set the browser history
+document.addEventListener('start-record-navigation', (event) => {
   const { recordId, url } = event.detail[0];
+  window.history.replaceState({ recordId }, '', url);
+});
 
-  // Check for unsaved changes before navigation
-  if (hasUnsavedChanges()) {
-    if (!confirm('You have unsaved changes. Are you sure you want to leave this page?')) {
+// When the user navigates back or forward in the browser, 
+// we need to update the record
+window.addEventListener("popstate", (event) => {
+  if (event.state) {
+    Livewire.dispatch('execute-change-record', { 'recordId': event.state.recordId });
+  }
+});
+
+// When the user navigates to a new record with the filament navigation, 
+// we need to update the browser history
+document.addEventListener('changeNavigationRecord', (event) => {
+  const { recordId, url, isViewRecord, componentId, confirmMessage } = event.detail[0];
+
+  const component = Livewire.find(componentId);
+
+  console.log(component.data, isViewRecord);
+
+  if (!isViewRecord) {
+    if (
+      window.jsMd5(
+        JSON.stringify(component.data).replace(/\\/g, ''),
+      ) !== component.savedDataHash ||
+      component?.__instance?.effects?.redirect
+    ) {
+      if (confirm(confirmMessage)) {
+        window.history.pushState({ recordId }, '', url);
+        component.executeChangeRecord(recordId);
+      }
       return;
     }
   }
 
-  // Update browser history without page refresh
+
   window.history.pushState({ recordId }, '', url);
+  component.executeChangeRecord(recordId);
 });
-
-document.addEventListener('previousRecord', (event) => {
-  const { recordId, url } = event.detail[0];
-
-  // Check for unsaved changes before navigation
-  if (hasUnsavedChanges()) {
-    if (!confirm('You have unsaved changes. Are you sure you want to leave this page?')) {
-      return;
-    }
-  }
-
-  // Update browser history without page refresh
-  window.history.pushState({ recordId }, '', url);
-});
-
-function hasUnsavedChanges() {
-  // Check if there are any mounted actions or forms
-  const livewireComponent = window.Livewire?.find(document.querySelector('[wire\\:id]')?.getAttribute('wire:id'));
-
-  if (!livewireComponent) {
-    return false;
-  }
-
-  const hasMountedActions = [
-    ...(Array.isArray(livewireComponent.mountedActions) ? livewireComponent.mountedActions : []),
-    ...(Array.isArray(livewireComponent.mountedFormComponentActions) ? livewireComponent.mountedFormComponentActions : []),
-    ...(Array.isArray(livewireComponent.mountedInfolistActions) ? livewireComponent.mountedInfolistActions : []),
-    ...(Array.isArray(livewireComponent.mountedTableActions) ? livewireComponent.mountedTableActions : []),
-    ...(livewireComponent.mountedTableBulkAction ? [livewireComponent.mountedTableBulkAction] : []),
-  ].length > 0;
-
-  return hasMountedActions && !livewireComponent.__instance?.effects?.redirect;
-}
