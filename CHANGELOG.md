@@ -16,6 +16,11 @@ All notable changes to `filament-record-navigation` will be documented in this f
 
 **Full Changelog**: https://github.com/josespinal/filament-record-navigation/compare/v2.1.0...v2.2.0
 
+## v2.1.1 - 2025-04-12
+
+### Added
+- Fixed dirty state tracking when data properties change in record forms. Used Livewire hook methods naming convention for traits. See: https://livewire.laravel.com/docs/lifecycle-hooks#using-hooks-inside-a-trait
+
 ## v2.1.0 - 2025-04-12
 
 ### Added

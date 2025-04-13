@@ -80,12 +80,10 @@ trait HasRecordNavigation
         ]);
     }
 
-    public function updatedData()
+    public function updatedHasRecordNavigation($property): void
     {
-        $this->isDataDirty = true;
-
-        if (method_exists(parent::class, 'updatedData') && parent::updatedData()) {
-            parent::updatedData();
+        if (str_starts_with($property, 'data.')) {
+            $this->isDataDirty = true;
         }
     }
 
