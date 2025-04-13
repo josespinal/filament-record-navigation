@@ -2,9 +2,18 @@
 
 ## Introduction
 
-The **Filament Record Navigation Plugin** allows seamless navigation through records in a Filament resource's view. With this plugin, you can add "Next" and "Previous" buttons to navigate through records efficiently.
+The **Filament Record Navigation Plugin** allows seamless navigation through records in a Filament resource's view. With this plugin, you can add "Next" and "Previous" buttons to navigate through records efficiently. It includes features like unsaved changes detection, browser history management, and proper URL updates.
 
 https://github.com/josespinal/filament-record-navigation/assets/10059/fbb09144-b0b5-411d-85a8-1d94eedcad01
+
+## Features
+
+- Navigate between records with "Next" and "Previous" buttons
+- Unsaved changes detection with confirmation dialog
+- Browser history management for proper navigation state
+- Seamless URL updates without page refresh
+- Support for Laravel 10, 11, and 12
+- Compatible with Filament v3.x
 
 ## Installation
 
@@ -15,6 +24,20 @@ composer require josespinal/filament-record-navigation
 ```
 
 The package will automatically register itself.
+
+### Step 2: Publish Filament Assets
+
+After installation, you need to publish and build the Filament assets:
+
+```bash
+php artisan filament:assets
+```
+
+For production environments, make sure to run:
+
+```bash
+php artisan filament:assets --optimize
+```
 
 ## Usage
 
@@ -74,6 +97,25 @@ class ListPosts extends ListRecords
     protected static string $resource = PostResource::class;
 }
 ```
+
+### Unsaved Changes Detection
+
+The plugin automatically detects unsaved changes in your forms and will prompt for confirmation before navigating away. This helps prevent accidental data loss when navigating between records.
+
+No additional configuration is needed - this feature works out of the box.
+
+#### Customizing the Confirmation Message
+
+By default, this uses Filament's translation key `filament-panels::unsaved-changes-alert.body`. You can customize this message by publishing Filament's translations and modifying the corresponding translation string.
+
+Remember to rebuild your assets after making changes.
+
+## Browser Support
+
+The plugin uses modern browser features for enhanced navigation:
+- History API for proper browser history management
+- URL updates without page refresh
+- Works with all modern browsers (Chrome, Firefox, Safari, Edge)
 
 ## Changelog
 
