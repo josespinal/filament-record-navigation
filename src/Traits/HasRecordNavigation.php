@@ -99,7 +99,7 @@ trait HasRecordNavigation
         $this->initializeComponentRecordProperty();
 
         // Update the header actions (buttons) to reflect the new record
-        $this->cacheHeaderActions();
+        // $this->cacheHeaderActions();
     }
 
     protected function initializeProperties(int|string $recordId): void
@@ -129,17 +129,17 @@ trait HasRecordNavigation
      */
     protected function getNavigationActions(): array
     {
-        $ids = session('filament_record_navigation_ids');
+        // $ids = session('filament_record_navigation_ids');
         $isSessionSet = session()->has('filament_record_navigation_ids');
-        $isPreviousDisabled = false;
-        $isNextDisabled = false;
+        // $isPreviousDisabled = false;
+        // $isNextDisabled = false;
 
-        if ($isSessionSet) {
-            $position = array_search($this->recordId, $ids);
+        // if ($isSessionSet) {
+        //     $position = array_search($this->recordId, $ids);
 
-            $isPreviousDisabled = $position === 0;
-            $isNextDisabled = $position === count($ids) - 1;
-        }
+        //     $isPreviousDisabled = $position === 0;
+        //     $isNextDisabled = $position === count($ids) - 1;
+        // }
 
         return [
             Action::make('Previous')
@@ -151,8 +151,7 @@ trait HasRecordNavigation
                     'data-record-navigation-buttons' => true,
                     'data-record-navigation-previous' => true,
                 ])
-                ->visible($isSessionSet)
-                ->disabled($isPreviousDisabled),
+                ->visible($isSessionSet),
             Action::make('Next')
                 ->action('nextRecord')
                 ->color('gray')
@@ -162,8 +161,7 @@ trait HasRecordNavigation
                     'data-record-navigation-buttons' => true,
                     'data-record-navigation-next' => true,
                 ])
-                ->visible($isSessionSet)
-                ->disabled($isNextDisabled),
+                ->visible($isSessionSet),
         ];
     }
 
