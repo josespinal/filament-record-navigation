@@ -131,10 +131,15 @@ trait HasRecordNavigation
     {
         $ids = session('filament_record_navigation_ids');
         $isSessionSet = session()->has('filament_record_navigation_ids');
-        $position = array_search($this->recordId, $ids);
+        $isPreviousDisabled = false;
+        $isNextDisabled = false;
 
-        $isPreviousDisabled = $position === 0;
-        $isNextDisabled = $position === count($ids) - 1;
+        if ($isSessionSet) {
+            $position = array_search($this->recordId, $ids);
+
+            $isPreviousDisabled = $position === 0;
+            $isNextDisabled = $position === count($ids) - 1;
+        }
 
         return [
             Action::make('Previous')
