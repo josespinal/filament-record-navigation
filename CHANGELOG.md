@@ -2,6 +2,14 @@
 
 All notable changes to `filament-record-navigation` will be documented in this file.
 
+## v2.2.2 - 2025-04-13
+
+### What's Changed
+
+* fix: not running cacheHeaderActions function after record change by @josespinal in https://github.com/josespinal/filament-record-navigation/pull/21
+
+**Full Changelog**: https://github.com/josespinal/filament-record-navigation/compare/v2.2.1...v2.2.2
+
 ## v2.2.1 - 2025-04-13
 
 ### What's Changed
