@@ -115,17 +115,10 @@ trait HasRecordNavigation
      */
     protected function initializeComponentRecordProperty(): void
     {
-        $this->record = $this->loadModel();
-    }
-
-    /**
-     * Load the model instance for the current record.
-     */
-    protected function loadModel(): Model
-    {
-        $modelClass = static::$resource::getModel();
-
-        return $modelClass::find($this->recordId);
+        $this->record = $this->resolveRecord($this->recordId);
+        $this->authorizeAccess();
+        $this->fillForm();
+        $this->dispatch('recordNavigation.reloadRelationManagers', recordId: $this->recordId);
     }
 
     /**
