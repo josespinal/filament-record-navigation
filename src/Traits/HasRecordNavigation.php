@@ -37,7 +37,7 @@ trait HasRecordNavigation
     {
         parent::mount($record);
         $this->initializeProperties($record);
-        $this->dispatch('startRecordNavigation', [
+        $this->dispatch('recordNavigation.startRecordNavigation', [
             'recordId' => $this->recordId,
             'url' => $this->url,
         ]);
@@ -71,7 +71,7 @@ trait HasRecordNavigation
         // Generate the correct URL with the new record ID
         $this->url = route($this->getRouteName(), ['record' => $recordId]);
 
-        $this->dispatch('changeNavigationRecord', [
+        $this->dispatch('recordNavigation.changeNavigationRecord', [
             'recordId' => $recordId,
             'url' => $this->url,
             'isViewPage' => $this->isViewPage,
@@ -83,6 +83,7 @@ trait HasRecordNavigation
     public function updatedHasRecordNavigation($property): void
     {
         if (str_starts_with($property, 'data.')) {
+            ray($property);
             $this->isDataDirty = true;
         }
     }
@@ -90,12 +91,15 @@ trait HasRecordNavigation
     /**
      * Execute the record change after confirmation.
      */
-    #[On('executeChangeRecord')]
+    #[On('recordNavigation.executeChangeRecord')]
     public function executeChangeRecord(int|string $recordId): void
     {
         $this->recordId = $recordId;
         $this->initializeProperties($this->recordId);
         $this->initializeComponentRecordProperty();
+
+        // Update the header actions (buttons) to reflect the new record
+        $this->cacheHeaderActions();
     }
 
     protected function initializeProperties(int|string $recordId): void
@@ -125,9 +129,14 @@ trait HasRecordNavigation
      */
     protected function getNavigationActions(): array
     {
+        $ids = session('filament_record_navigation_ids');
         $isSessionSet = session()->has('filament_record_navigation_ids');
+        $position = array_search($this->recordId, $ids);
 
-        return array_merge(parent::getHeaderActions(), [
+        $isPreviousDisabled = $position === 0;
+        $isNextDisabled = $position === count($ids) - 1;
+
+        return [
             Action::make('Previous')
                 ->action('previousRecord')
                 ->color('gray')
@@ -137,7 +146,8 @@ trait HasRecordNavigation
                     'data-record-navigation-buttons' => true,
                     'data-record-navigation-previous' => true,
                 ])
-                ->visible($isSessionSet),
+                ->visible($isSessionSet)
+                ->disabled($isPreviousDisabled),
             Action::make('Next')
                 ->action('nextRecord')
                 ->color('gray')
@@ -147,7 +157,13 @@ trait HasRecordNavigation
                     'data-record-navigation-buttons' => true,
                     'data-record-navigation-next' => true,
                 ])
-                ->visible($isSessionSet),
-        ]);
+                ->visible($isSessionSet)
+                ->disabled($isNextDisabled),
+        ];
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return array_merge(parent::getHeaderActions(), $this->getNavigationActions());
     }
 }
