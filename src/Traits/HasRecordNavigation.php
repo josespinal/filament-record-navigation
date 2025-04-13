@@ -6,7 +6,6 @@ namespace JoseEspinal\RecordNavigation\Traits;
 
 use Filament\Actions\Action;
 use Filament\Resources\Pages\ViewRecord;
-use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\On;
 
 trait HasRecordNavigation
