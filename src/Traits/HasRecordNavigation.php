@@ -135,17 +135,29 @@ trait HasRecordNavigation
      */
     protected function getNavigationActions(): array
     {
+        $isSessionSet = session()->has('filament_record_navigation_ids');
+
         return array_merge(parent::getHeaderActions(), [
             Action::make('Previous')
                 ->action('previousRecord')
                 ->color('gray')
                 ->icon('heroicon-s-chevron-left')
-                ->iconButton(),
+                ->iconButton()
+                ->extraAttributes([
+                    'data-record-navigation-buttons' => true,
+                    'data-record-navigation-previous' => true,
+                ])
+                ->visible($isSessionSet),
             Action::make('Next')
                 ->action('nextRecord')
                 ->color('gray')
                 ->icon('heroicon-s-chevron-right')
-                ->iconButton(),
+                ->iconButton()
+                ->extraAttributes([
+                    'data-record-navigation-buttons' => true,
+                    'data-record-navigation-next' => true,
+                ])
+                ->visible($isSessionSet),
         ]);
     }
 }
