@@ -77,7 +77,7 @@ trait HasRecordNavigation
             'url' => $this->url,
             'isViewPage' => $this->isViewPage,
             'confirmMessage' => __('filament-panels::unsaved-changes-alert.body'),
-            'isDataDirty' => $this->isDataDirty
+            'isDataDirty' => $this->isDataDirty,
         ]);
     }
 
