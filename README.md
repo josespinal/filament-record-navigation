@@ -140,7 +140,7 @@ The plugin uses modern browser features for enhanced navigation:
 
 ## Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+Please see [CHANGELOG](https://github.com/josespinal/filament-record-navigation/blob/main/CHANGELOG.md) for more information on what has changed recently.
 
 ## Credits
 
