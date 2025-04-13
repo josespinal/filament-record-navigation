@@ -12,6 +12,7 @@ https://github.com/josespinal/filament-record-navigation/assets/10059/fbb09144-b
 - Unsaved changes detection with confirmation dialog
 - Browser history management for proper navigation state
 - Seamless URL updates without page refresh
+- Automatic relation managers refresh when navigating between records
 - Support for Laravel 10, 11, and 12
 - Compatible with Filament v3.x
 
@@ -95,6 +96,26 @@ class ListPosts extends ListRecords
     use HasRecordsList;
 
     protected static string $resource = PostResource::class;
+}
+```
+
+### Enable Relation Managers Refresh
+
+To automatically refresh relation managers when navigating between records, use the `HasRelationManagersWithRecordNavigation` trait in your relation managers:
+
+```php
+namespace App\Filament\Resources\PostResource\RelationManagers;
+
+use Filament\Resources\RelationManagers\RelationManager;
+use JoseEspinal\RecordNavigation\Traits\HasRelationManagersWithRecordNavigation;
+
+class CommentsRelationManager extends RelationManager
+{
+    use HasRelationManagersWithRecordNavigation;
+
+    protected static string $relationship = 'comments';
+    
+    // Rest of your relation manager code...
 }
 ```
 
