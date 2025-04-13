@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace JoseEspinal\RecordNavigation\Traits;
 
 use Filament\Actions\Action;
-use Filament\Pages\Concerns\HasUnsavedDataChangesAlert;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\On;
 
 trait HasRecordNavigation
 {
-    use HasUnsavedDataChangesAlert;
-
     /**
      * The current record ID being viewed/edited.
      */
@@ -22,12 +19,17 @@ trait HasRecordNavigation
     /**
      * Whether the current page is a view record page.
      */
-    public bool $isViewRecord = false;
+    public bool $isViewPage = false;
 
     /**
      * The URL of the current record.
      */
     public string $url;
+
+    /**
+     * Whether the data has been updated.
+     */
+    public bool $isDataDirty = false;
 
     /**
      * Mount the record navigation functionality.
@@ -36,8 +38,7 @@ trait HasRecordNavigation
     {
         parent::mount($record);
         $this->initializeProperties($record);
-
-        $this->dispatch('start-record-navigation', [
+        $this->dispatch('startRecordNavigation', [
             'recordId' => $this->recordId,
             'url' => $this->url,
         ]);
@@ -68,41 +69,51 @@ trait HasRecordNavigation
      */
     protected function navigateToRecord(string|int $recordId): void
     {
+        // Generate the correct URL with the new record ID
+        $this->url = route($this->getRouteName(), ['record' => $recordId]);
+
         $this->dispatch('changeNavigationRecord', [
             'recordId' => $recordId,
             'url' => $this->url,
-            'isViewRecord' => $this->isViewRecord,
-            'componentId' => $this->getId(),
+            'isViewPage' => $this->isViewPage,
             'confirmMessage' => __('filament-panels::unsaved-changes-alert.body'),
+            'isDataDirty' => $this->isDataDirty
         ]);
+    }
 
-        $this->mountHasUnsavedDataChangesAlert();
+    public function updatedData()
+    {
+        $this->isDataDirty = true;
+
+        if (method_exists(parent::class, 'updatedData') && parent::updatedData()) {
+            parent::updatedData();
+        }
     }
 
     /**
      * Execute the record change after confirmation.
      */
-    #[On('execute-change-record')]
+    #[On('executeChangeRecord')]
     public function executeChangeRecord(int|string $recordId): void
     {
         $this->recordId = $recordId;
-        $this->initializeComponentRecordProperty();
         $this->initializeProperties($this->recordId);
+        $this->initializeComponentRecordProperty();
     }
 
-    private function initializeProperties(int|string $recordId): void
+    protected function initializeProperties(int|string $recordId): void
     {
+        $this->isDataDirty = false;
         $this->recordId = $recordId;
-        $this->isViewRecord = $this instanceof ViewRecord;
+        $this->isViewPage = $this instanceof ViewRecord;
         $this->url = route($this->getRouteName(), ['record' => $recordId]);
-        $this->mountHasUnsavedDataChangesAlert();
         parent::mount($this->recordId);
     }
 
     /**
      * Initialize the record instance.
      */
-    private function initializeComponentRecordProperty(): void
+    protected function initializeComponentRecordProperty(): void
     {
         $this->record = $this->loadModel();
     }
@@ -110,7 +121,7 @@ trait HasRecordNavigation
     /**
      * Load the model instance for the current record.
      */
-    private function loadModel(): Model
+    protected function loadModel(): Model
     {
         $modelClass = static::$resource::getModel();
 
