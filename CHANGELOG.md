@@ -2,6 +2,20 @@
 
 All notable changes to `filament-record-navigation` will be documented in this file.
 
+## v2.2.0 - 2025-04-13
+
+### Added
+- Added support for relation managers refresh when navigating between records
+- Added new trait `HasRelationManagersWithRecordNavigation` for relation managers
+- Implemented auto-reload for relation managers via Livewire events
+
+### Changed
+- Refactored record initialization to use existing Filament methods
+- Improved handling of record changes to ensure relation managers stay in sync
+- Optimized record loading process
+
+**Full Changelog**: https://github.com/josespinal/filament-record-navigation/compare/v2.1.0...v2.2.0
+
 ## v2.1.0 - 2025-04-12
 
 ### Added
