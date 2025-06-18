@@ -6,6 +6,7 @@ namespace JoseEspinal\RecordNavigation\Traits;
 
 use Filament\Actions\Action;
 use Filament\Resources\Pages\ViewRecord;
+use Illuminate\Support\Facades\App;
 use Livewire\Attributes\On;
 
 trait HasRecordNavigation
@@ -83,7 +84,9 @@ trait HasRecordNavigation
     public function updatedHasRecordNavigation($property): void
     {
         if (str_starts_with($property, 'data.')) {
-            ray($property);
+            if(function_exists('ray')) {
+                ray($property);
+            }
             $this->isDataDirty = true;
         }
     }
@@ -141,11 +144,19 @@ trait HasRecordNavigation
         //     $isNextDisabled = $position === count($ids) - 1;
         // }
 
+        $naigation_previous_icon = App::isLocal('ar')
+            ? 'heroicon-s-chevron-right'
+            : 'heroicon-s-chevron-left';
+
+        $naigation_next_icon = App::isLocal('ar')
+            ? 'heroicon-s-chevron-left'
+            : 'heroicon-s-chevron-right';
+
         return [
             Action::make('Previous')
                 ->action('previousRecord')
                 ->color('gray')
-                ->icon('heroicon-s-chevron-left')
+                ->icon($naigation_previous_icon)
                 ->iconButton()
                 ->extraAttributes([
                     'data-record-navigation-buttons' => true,
@@ -155,7 +166,7 @@ trait HasRecordNavigation
             Action::make('Next')
                 ->action('nextRecord')
                 ->color('gray')
-                ->icon('heroicon-s-chevron-right')
+                ->icon($naigation_next_icon)
                 ->iconButton()
                 ->extraAttributes([
                     'data-record-navigation-buttons' => true,
