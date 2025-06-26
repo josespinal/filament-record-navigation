@@ -20,12 +20,7 @@ trait HasRecordsList
         $model = static::getResource()::getModel();
         $routeKeyName = (new $model)->getRouteKeyName() ?? 'id';
 
-        $direction = $this->tableSortDirection ?? $this->getTable()->getDefaultSortDirection() ?? 'asc';
-        $sort = $this->tableSortColumn ?? $this->getTable()->getDefaultSort($query, $direction);
-
-        if ($sort) {
-            $query->orderBy($sort, $direction);
-        }
+        $this->applySortingToTableQuery($query);
 
         // Store record IDs in session
         session(['filament_record_navigation_ids' => $query->pluck($routeKeyName)->toArray()]);
