@@ -1,0 +1,14 @@
+includes:
+    # larastan is a dev dependency but phpstan/extension-installer is not, so
+    # its extension has to be pulled in by hand.
+    - ./vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 5
+    paths:
+        - src
+        # PHPStan only analyses a trait's method bodies in the context of a
+        # class that uses it. Nearly all of this package is traits, so without
+        # the workbench classes that compose them the analysis is a no-op.
+        - workbench
+    tmpDir: build/phpstan
