@@ -29,7 +29,10 @@ jobs:
           - laravel: 10.*
             testbench: 8.*
             carbon: ^2.63
-            filament: ^3.0
+            # Spelled as a wildcard rather than ^3.0: the Windows shell eats a
+            # caret, which is why carbon carries the ^^^ prefix below, and a
+            # bare `3.0` reaches Composer as an exact version match.
+            filament: 3.*
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
