@@ -19,8 +19,12 @@ jobs:
         os: [ubuntu-latest, windows-latest]
         php: [8.3, 8.2]
         laravel: [10.*]
-        filament: [3.0]
         stability: [prefer-lowest, prefer-stable]
+        # `filament` is supplied by the include below. Naming it here too would
+        # conflict with it: an include that would overwrite an original matrix
+        # value is emitted as its own combination instead of being merged, and
+        # that combination has no `os`, which leaves `runs-on` empty and fails
+        # the whole run before any job starts.
         include:
           - laravel: 10.*
             testbench: 8.*
