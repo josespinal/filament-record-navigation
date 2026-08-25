@@ -83,7 +83,6 @@ trait HasRecordNavigation
     public function updatedHasRecordNavigation($property): void
     {
         if (str_starts_with($property, 'data.')) {
-            ray($property);
             $this->isDataDirty = true;
         }
     }
