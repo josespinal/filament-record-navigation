@@ -20,12 +20,11 @@ trait HasRecordsList
         $model = static::getResource()::getModel();
         $routeKeyName = (new $model)->getRouteKeyName() ?? 'id';
 
-        $direction = $this->tableSortDirection ?? $this->getTable()->getDefaultSortDirection() ?? 'asc';
-        $sort = $this->tableSortColumn ?? $this->getTable()->getDefaultSort($query, $direction);
-
-        if ($sort) {
-            $query->orderBy($sort, $direction);
-        }
+        // Let Filament apply the sort so that columns declaring a custom sort
+        // query (`sortable(query: ...)`) are honoured instead of being ordered
+        // by their name. The returned builder is reassigned because a table
+        // whose `defaultSort()` returns a builder is sorted on a new instance.
+        $query = $this->applySortingToTableQuery($query);
 
         // Store record IDs in session
         session(['filament_record_navigation_ids' => $query->pluck($routeKeyName)->toArray()]);
